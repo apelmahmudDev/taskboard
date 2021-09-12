@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { HiOutlinePlus } from "react-icons/hi";
 import { FiTrash } from "react-icons/fi";
@@ -6,9 +6,11 @@ import { ImCross } from "react-icons/im";
 import { BsPencil } from "react-icons/bs";
 import Modal from "react-modal";
 import ModalBody from "./ModalBody";
+import { TaskContext } from "../../contexts/TaskContext";
 
 const Task = () => {
-	const [tasks, setTasks] = useState([]);
+	const { tasks, setTasks } = useContext(TaskContext);
+	const [singleTask, setSingleTask] = useState({});
 	const inputRef = useRef();
 
 	// task handler
@@ -24,14 +26,16 @@ const Task = () => {
 		inputRef.current.value = "";
 	};
 
-	// handle details
-	const saveDetails = (details) => {
-		console.log(details);
+	// Add task details
+	const saveDetails = (details, taskId) => {
+		const selectedTask = tasks.find((task) => task.id === taskId);
+		selectedTask.details = details;
 	};
 
-	// add date
-	const addDate = (date) => {
-		console.log(date);
+	// add task date
+	const addDate = (taskDate, taskId) => {
+		const selectedTask = tasks.find((task) => task.id === taskId);
+		selectedTask.date = taskDate;
 	};
 
 	// modal custom styles
@@ -51,8 +55,9 @@ const Task = () => {
 
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 
-	function openModal() {
+	function openModal(taskId) {
 		setIsOpen(true);
+		setSingleTask(tasks.find((task) => task.id === taskId));
 	}
 
 	function closeModal() {
@@ -87,17 +92,30 @@ const Task = () => {
 				</div>
 				{/* task added */}
 				<div className="mt-3">
-					{tasks.map((task) => (
-						<div key={task.id} className="flex items-center my-3">
+					{tasks?.map((task) => (
+						<div key={task.id} className="flex items-start my-3">
 							<button
 								onClick={() => taskHandler()}
 								className="bg-indigo-900 hover:bg-indigo-800 text-white rounded-full p-1 mr-3"
 							>
 								<HiOutlinePlus size="1.5rem" className="cursor-pointer" />
 							</button>
-							<p className="text-lg text-indigo-900">{task.task}</p>
+							<div>
+								{/* task title */}
+								<p className="text-lg text-indigo-900">{task.task}</p>
+								{/* task details */}
+								<p className="text-sm text-gray-500">{task.details}</p>
+								{task.date && (
+									<div className="bg-indigo-100 inline-block px-2 py-1 rounded text-indigo-900 text-sm font-semibold mt-2">
+										{task.date}
+									</div>
+								)}
+							</div>
 							{/* edit icon */}
-							<button onClick={openModal} className="flex-1 text-right">
+							<button
+								onClick={() => openModal(task.id)}
+								className="flex-1 text-right"
+							>
 								<BsPencil className="inline text-indigo-900" size="1.3rem" />
 							</button>
 						</div>
@@ -120,7 +138,11 @@ const Task = () => {
 						</button>
 					</div>
 					{/* modal body */}
-					<ModalBody addDate={addDate} saveDetails={saveDetails} />
+					<ModalBody
+						addDate={addDate}
+						saveDetails={saveDetails}
+						singleTask={singleTask}
+					/>
 				</Modal>
 			</div>
 		</div>
