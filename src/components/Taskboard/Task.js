@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { HiOutlinePlus } from "react-icons/hi";
+import { FiTrash } from "react-icons/fi";
+import { ImCross } from "react-icons/im";
+import { BsPencil } from "react-icons/bs";
 import Modal from "react-modal";
+import ModalBody from "./ModalBody";
 
 const Task = () => {
 	const [tasks, setTasks] = useState([]);
@@ -20,9 +24,14 @@ const Task = () => {
 		inputRef.current.value = "";
 	};
 
+	// handle details
+	const saveDetails = (details) => {
+		console.log(details);
+	};
+
 	// add date
-	const addDate = () => {
-		new Date();
+	const addDate = (date) => {
+		console.log(date);
 	};
 
 	// modal custom styles
@@ -40,16 +49,10 @@ const Task = () => {
 
 	Modal.setAppElement("*");
 
-	let subtitle;
 	const [modalIsOpen, setIsOpen] = React.useState(false);
 
 	function openModal() {
 		setIsOpen(true);
-	}
-
-	function afterOpenModal() {
-		// references are now sync'd and can be accessed.
-		subtitle.style.color = "#f00";
 	}
 
 	function closeModal() {
@@ -94,46 +97,30 @@ const Task = () => {
 							</button>
 							<p className="text-lg text-indigo-900">{task.task}</p>
 							{/* edit icon */}
-							<button className="flex-1 text-right">✏</button>
+							<button onClick={openModal} className="flex-1 text-right">
+								<BsPencil className="inline text-indigo-900" size="1.3rem" />
+							</button>
 						</div>
 					))}
 				</div>
 			</div>
-			{/* add task details */}
+			{/* add task details  modal*/}
 			<div>
-				<button onClick={openModal}>Open Modal</button>
 				<Modal
 					isOpen={modalIsOpen}
-					onAfterOpen={afterOpenModal}
 					onRequestClose={closeModal}
 					style={customStyles}
 				>
-					<h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-					<button onClick={closeModal}>close</button>
-
-					{/* task name */}
-					<div className="w-96">
-						<p className="text-lg text-indigo-900">Scrum meeting</p>
-						<textArea
-							className="my-3 block w-full p-2 h-16 outline-none text-indigo-900 text-lg"
-							type="text"
-							placeholder="Add details"
-						/>
-						<div className="flex justify-between">
-							<button
-								onClick={() => addDate()}
-								className="text-lg text-indigo-900 hover:text-indigo-800"
-							>
-								Add date
-							</button>
-							<button className="text-lg text-indigo-900 hover:text-indigo-800">
-								Save
-							</button>
-						</div>
-						<button className="text-lg text-indigo-900 cursor-pointer hover:text-indigo-800">
-							Move to another list
+					<div className="mb-4 flex justify-between">
+						<button className="text-indigo-900">
+							<FiTrash size="1.3rem" />
+						</button>
+						<button className="text-indigo-900" onClick={closeModal}>
+							<ImCross size="1rem" />
 						</button>
 					</div>
+					{/* modal body */}
+					<ModalBody addDate={addDate} saveDetails={saveDetails} />
 				</Modal>
 			</div>
 		</div>
