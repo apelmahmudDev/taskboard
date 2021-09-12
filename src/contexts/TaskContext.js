@@ -2,23 +2,32 @@ import React, { createContext, useEffect, useState } from "react";
 
 export const TaskContext = createContext();
 
+// get user data from localStorage
+const getUserLocalData = () => {
+	const user = JSON.parse(localStorage.getItem("user")) || [];
+	return user;
+};
+
+// get task data from localStorage
+const getTasksLocalData = () => {
+	const localData = JSON.parse(localStorage.getItem("myTasks")) || [];
+	return localData;
+};
+
 const TaskProvider = ({ children }) => {
-	const [tasks, setTasks] = useState([]);
-	const [user, setUser] = useState({ isSigned: false });
+	const [tasks, setTasks] = useState(getTasksLocalData());
+	const [user, setUser] = useState(getUserLocalData());
 
-	const taskboardData = () => {
-		const localData = localStorage.getItem("myTasks");
-		return localData ? JSON.parse(localData) : [];
-	};
+	console.log("from context", tasks);
+	// save user data to localStorage
+	useEffect(() => {
+		localStorage.setItem("user", JSON.stringify(user || []));
+	}, [user]);
 
-	// Tasks save in the localStorage
+	// save task data to localStorage
 	useEffect(() => {
 		localStorage.setItem("myTasks", JSON.stringify(tasks || []));
 	}, [tasks]);
-
-	console.log(taskboardData());
-
-	// setTasks(JSON.parse(localStorage.getItem("myTasks")) || []);
 
 	const value = {
 		tasks,

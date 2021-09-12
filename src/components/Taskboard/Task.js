@@ -9,6 +9,7 @@ import ModalBody from "./ModalBody";
 import { TaskContext } from "../../contexts/TaskContext";
 
 const Task = () => {
+	const [modalIsOpen, setIsOpen] = useState(false);
 	const { tasks, setTasks } = useContext(TaskContext);
 	const [singleTask, setSingleTask] = useState({});
 	const inputRef = useRef();
@@ -30,12 +31,20 @@ const Task = () => {
 	const saveDetails = (details, taskId) => {
 		const selectedTask = tasks.find((task) => task.id === taskId);
 		selectedTask.details = details;
+
+		const filteredTasks = tasks.filter((task) => task.id !== taskId);
+		const updatedTasks = [...filteredTasks, selectedTask];
+		setTasks(updatedTasks);
 	};
 
 	// add task date
 	const addDate = (taskDate, taskId) => {
 		const selectedTask = tasks.find((task) => task.id === taskId);
 		selectedTask.date = taskDate;
+
+		const filteredTasks = tasks.filter((task) => task.id !== taskId);
+		const updatedTasks = [...filteredTasks, selectedTask];
+		setTasks(updatedTasks);
 	};
 
 	// modal custom styles
@@ -52,8 +61,6 @@ const Task = () => {
 	};
 
 	Modal.setAppElement("*");
-
-	const [modalIsOpen, setIsOpen] = React.useState(false);
 
 	function openModal(taskId) {
 		setIsOpen(true);
@@ -142,6 +149,7 @@ const Task = () => {
 						addDate={addDate}
 						saveDetails={saveDetails}
 						singleTask={singleTask}
+						tasks={tasks}
 					/>
 				</Modal>
 			</div>

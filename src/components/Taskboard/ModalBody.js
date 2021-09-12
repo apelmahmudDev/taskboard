@@ -10,6 +10,7 @@ const ModalBody = ({ addDate, saveDetails, singleTask }) => {
 				className="my-3 block w-full p-2 h-16 outline-none text-indigo-900 text-lg"
 				type="text"
 				ref={detailsRef}
+				defaultValue={singleTask.details}
 				placeholder="Add details"
 			/>
 			<div className="flex justify-between">
