@@ -1,26 +1,43 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { TaskContext } from "../contexts/TaskContext";
+const axios = require("axios");
 
 const Signup = () => {
-	const [signupUser, setSignupUser] = useState({});
-
+	const { user, setUser } = useContext(TaskContext);
+	const [userPhoto, setUserPhoto] = useState({});
 	const nameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const checkRef = useRef();
 
+	// load user photo with dynamic id
+	useEffect(() => {
+		const randomId = Math.round(Math.random() * 1000);
+		const url = `https://picsum.photos/id/${randomId}/info`;
+		axios
+			.get(url)
+			.then(function (response) {
+				setUserPhoto(response.data);
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+	}, []);
+
 	// handle signup
 	const handleSignup = (e) => {
-		e.preventDefault();
 		const newUser = {
-			...signupUser,
+			...user,
+			userImg: userPhoto.download_url,
 			name: nameRef.current.value,
 			email: emailRef.current.value,
 			password: passwordRef.current.value,
+			isSigned: true,
 		};
-		setSignupUser(newUser);
+		setUser(newUser);
+		e.preventDefault();
 	};
-
-	console.log(signupUser);
 
 	return (
 		<div className="px-4 bg-indigo-800 grid place-items-center h-screen">
@@ -81,12 +98,18 @@ const Signup = () => {
 					</div>
 					<div className="text-center">
 						<input
-							className="my-11 bg-white hover:bg-gray-200 text-indigo-900 px-8 py-2 text-lg font-semibold cursor-pointer"
+							className="mt-11 bg-white hover:bg-gray-200 text-indigo-900 px-8 py-2 text-lg font-semibold cursor-pointer"
 							type="submit"
 							value="Sign Up"
 						/>
 					</div>
 				</form>
+				<div className="my-8 flex ">
+					<span className="text-gray-100 tex-md">Have an account ?</span>
+					<Link className="text-gray-100 tex-md" to="/login">
+						<button>Login</button>
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

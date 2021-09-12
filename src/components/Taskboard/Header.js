@@ -1,12 +1,15 @@
 import React from "react";
 import { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
 	return (
 		<Fragment>
 			<div className="flex justify-between items-center px-4 md:px-8 bg-indigo-900 h-20">
 				{/* icon */}
-				<h1 className="text-3xl text-white font-semibold">Taskboard</h1>
+				<Link to="/">
+					<h1 className="text-3xl text-white font-semibold">Taskboard</h1>
+				</Link>
 				<div className="h-12 w-12 rounded-full overflow-hidden">
 					<img
 						className="w-full h-full"
