@@ -15,7 +15,7 @@ const Task = () => {
 	const inputRef = useRef();
 
 	// task handler
-	const taskHandler = () => {
+	const taskHandler = (e) => {
 		const inputText = inputRef.current.value.trim();
 		if (inputText.length > 0) {
 			const newTask = {
@@ -26,6 +26,7 @@ const Task = () => {
 			setTasks([...tasks, newTask]);
 		}
 		inputRef.current.value = "";
+		e.preventDefault();
 	};
 
 	// Add task details
@@ -65,6 +66,7 @@ const Task = () => {
 			})
 		);
 	};
+
 	// MODAL AREA
 	// modal custom styles
 	const customStyles = {
@@ -104,9 +106,9 @@ const Task = () => {
 					/>
 				</div>
 				{/* task input field*/}
-				<div className="flex items-center">
+				<form onSubmit={taskHandler} className="flex items-center">
 					<button
-						onClick={() => taskHandler()}
+						type="submit"
 						className="bg-indigo-900 hover:bg-indigo-800 text-white rounded-full p-1 mr-3"
 					>
 						<HiOutlinePlusSm size="1.5rem" className="cursor-pointer" />
@@ -117,7 +119,7 @@ const Task = () => {
 						ref={inputRef}
 						className="text-lg outline-none text-indigo-900 w-full bg-white"
 					/>
-				</div>
+				</form>
 				{/* Display the task added*/}
 				<div className="mt-3">
 					{tasks?.map((task) => (
