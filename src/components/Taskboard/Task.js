@@ -2,17 +2,15 @@ import React, { useContext, useRef, useState } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { FiTrash } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
-import { IoCheckmarkSharp } from "react-icons/io5";
-import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import { HiOutlinePlusSm } from "react-icons/hi";
-import { BsPencil } from "react-icons/bs";
 import Modal from "react-modal";
 import ModalBody from "./ModalBody";
 import { TaskContext } from "../../contexts/TaskContext";
+import AddedTaskShow from "./AddedTaskShow";
 
 const Task = () => {
-	const [modalIsOpen, setIsOpen] = useState(false);
 	const { tasks, setTasks } = useContext(TaskContext);
+	const [modalIsOpen, setIsOpen] = useState(false);
 	const [singleTask, setSingleTask] = useState({});
 	const [taskComplete, setTaskComplete] = useState(false);
 	const inputRef = useRef();
@@ -57,6 +55,7 @@ const Task = () => {
 		setIsOpen(false);
 	};
 
+	// set complete or not status
 	const IsCompleteHandler = (taskId) => {
 		setTaskComplete(!taskComplete);
 		const selectedTask = tasks.find((task) => task.id === taskId);
@@ -67,6 +66,7 @@ const Task = () => {
 		setTasks(updatedTasks);
 	};
 
+	// MODAL AREA
 	// modal custom styles
 	const customStyles = {
 		content: {
@@ -119,43 +119,15 @@ const Task = () => {
 						className="text-lg outline-none text-indigo-900 bg-white"
 					/>
 				</div>
-				{/* task added */}
+				{/* Display the task added*/}
 				<div className="mt-3">
 					{tasks?.map((task) => (
-						<div key={task.id} className="flex items-start my-3">
-							<button
-								onClick={() => IsCompleteHandler(task.id)}
-								className="text-green-500 rounded-full mr-3"
-							>
-								{!task.complete && (
-									<div className="w-8 h-8 border border-indigo-900 hover:bg-gray-100 rounded-full"></div>
-								)}
-								{task.complete && (
-									<IoCheckmarkSharp
-										size="1.9rem"
-										className="cursor-pointer text-green-500 border border-green-500 rounded-full"
-									/>
-								)}
-							</button>
-							<div>
-								{/* task title */}
-								<p className="text-lg text-indigo-900">{task.task}</p>
-								{/* task details */}
-								<p className="text-sm text-gray-500">{task.details}</p>
-								{task.date && (
-									<div className="bg-indigo-100 inline-block px-2 py-1 rounded text-indigo-900 text-sm font-semibold mt-2">
-										{task.date}
-									</div>
-								)}
-							</div>
-							{/* edit icon */}
-							<button
-								onClick={() => openModal(task.id)}
-								className="flex-1 text-right"
-							>
-								<BsPencil className="inline text-indigo-900" size="1.3rem" />
-							</button>
-						</div>
+						<AddedTaskShow
+							key={task.id}
+							task={task}
+							openModal={openModal}
+							IsCompleteHandler={IsCompleteHandler}
+						/>
 					))}
 				</div>
 			</div>

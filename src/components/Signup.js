@@ -10,11 +10,11 @@ const Signup = () => {
 	const { user, setUser } = useContext(TaskContext);
 	const [userPhoto, setUserPhoto] = useState({});
 	const [message, setMessage] = useState("");
+	const [loading, setLoading] = useState(false);
 	const nameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	let history = useHistory();
-	const [loading, setLoading] = useState(false);
 
 	// load user photo with dynamic id
 	useEffect(() => {
@@ -40,6 +40,7 @@ const Signup = () => {
 			password: passwordRef.current.value.trim(),
 			isSigned: true,
 		};
+
 		// checked user signed or not
 		if (newUser.email !== user.email) {
 			if (newUser.password.length >= 6) {

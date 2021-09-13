@@ -18,7 +18,6 @@ const TaskProvider = ({ children }) => {
 	const [tasks, setTasks] = useState(getTasksLocalData());
 	const [user, setUser] = useState(getUserLocalData());
 
-	console.log("from context", tasks);
 	// save user data to localStorage
 	useEffect(() => {
 		localStorage.setItem("user", JSON.stringify(user || []));

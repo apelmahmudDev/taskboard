@@ -8,10 +8,10 @@ import { TaskContext } from "../contexts/TaskContext";
 const Login = () => {
 	const { user } = useContext(TaskContext);
 	const [message, setMessage] = useState("");
+	const [loading, setLoading] = useState(false);
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	let history = useHistory();
-	const [loading, setLoading] = useState(false);
 
 	// handle login auth
 	const handleLogin = (e) => {

@@ -3,7 +3,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Taskboard from "./components/Taskboard/Taskboard";
 import TaskProvider from "./contexts/TaskContext";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Notfound from "./components/Notfound";
 
