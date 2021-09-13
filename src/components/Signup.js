@@ -1,5 +1,7 @@
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { TaskContext } from "../contexts/TaskContext";
 const axios = require("axios");
 
@@ -10,6 +12,8 @@ const Signup = () => {
 	const nameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
+	let history = useHistory();
+	const [loading, setLoading] = useState(false);
 
 	// load user photo with dynamic id
 	useEffect(() => {
@@ -39,7 +43,11 @@ const Signup = () => {
 		if (newUser.email !== user.email) {
 			if (newUser.password.length >= 6) {
 				setMessage("User Sign up successfully");
+				setLoading(true);
 				setUser(newUser);
+				setTimeout(() => {
+					history.push("/taskboard");
+				}, 1000);
 			} else {
 				setMessage("Your password should be at least 6 characters!");
 			}
@@ -106,11 +114,13 @@ const Signup = () => {
 						</label>
 					</div>
 					<div className="text-center">
-						<input
+						<button
 							className="mt-5 bg-white hover:bg-gray-200 text-indigo-900 px-8 py-2 text-lg font-semibold cursor-pointer"
 							type="submit"
-							value="Sign Up"
-						/>
+						>
+							<span className="mr-3">Sign Up</span>
+							{loading && <FontAwesomeIcon icon={faSpinner} spin />}
+						</button>
 					</div>
 				</form>
 				<div className="pt-5 flex justify-between">

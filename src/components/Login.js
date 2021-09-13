@@ -1,5 +1,7 @@
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { TaskContext } from "../contexts/TaskContext";
 
 const Login = () => {
@@ -7,20 +9,26 @@ const Login = () => {
 	const [message, setMessage] = useState("");
 	const emailRef = useRef();
 	const passwordRef = useRef();
+	let history = useHistory();
+	const [loading, setLoading] = useState(false);
 
 	// handle login auth
 	const handleLogin = (e) => {
 		const existingUser = {
 			...user,
 			email: emailRef.current.value,
-			password: passwordRef.current.value,
+			password: passwordRef.current.value.trim(),
 			isSigned: true,
 		};
 
 		// checked existing user
 		if (existingUser.email === user.email) {
 			if (existingUser.password === user.password) {
+				setLoading(true);
 				setMessage("User login successfully");
+				setTimeout(() => {
+					history.push("/taskboard");
+				}, 1000);
 			} else {
 				setMessage("Password do not match!");
 			}
@@ -72,11 +80,13 @@ const Login = () => {
 						<p className="text-gray-100">Forget Password?</p>
 					</div>
 					<div className="text-center">
-						<input
+						<button
 							className="mt-5 bg-white hover:bg-gray-200 text-indigo-900 px-8 py-2 text-lg font-semibold cursor-pointer"
 							type="submit"
-							value="Login"
-						/>
+						>
+							<span className="mr-3">Login</span>
+							{loading && <FontAwesomeIcon icon={faSpinner} spin />}
+						</button>
 					</div>
 				</form>
 				<div className="pt-5 flex justify-between flex-wrap">
