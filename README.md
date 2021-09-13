@@ -26,4 +26,4 @@ Taskboard is a task management SPA application like Trello but, it is a pretty s
 - React router
 - Tailwind CSS
 
-## [Live site]()
+## [Live site](https://tasks-board.netlify.app/)
