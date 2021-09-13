@@ -1,8 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { MdMoreVert } from "react-icons/md";
-import { HiOutlinePlus } from "react-icons/hi";
 import { FiTrash } from "react-icons/fi";
 import { ImCross } from "react-icons/im";
+import { IoCheckmarkSharp } from "react-icons/io5";
+import { RiCheckboxBlankCircleLine } from "react-icons/ri";
+import { HiOutlinePlusSm } from "react-icons/hi";
 import { BsPencil } from "react-icons/bs";
 import Modal from "react-modal";
 import ModalBody from "./ModalBody";
@@ -12,6 +14,7 @@ const Task = () => {
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const { tasks, setTasks } = useContext(TaskContext);
 	const [singleTask, setSingleTask] = useState({});
+	const [taskComplete, setTaskComplete] = useState(false);
 	const inputRef = useRef();
 
 	// task handler
@@ -21,12 +24,13 @@ const Task = () => {
 			const newTask = {
 				id: new Date(),
 				task: inputText,
+				complete: false,
 			};
 			setTasks([...tasks, newTask]);
 		}
 		inputRef.current.value = "";
 	};
-
+	console.log("j", singleTask);
 	// Add task details
 	const saveDetails = (details, taskId) => {
 		const selectedTask = tasks.find((task) => task.id === taskId);
@@ -41,6 +45,22 @@ const Task = () => {
 	const addDate = (taskDate, taskId) => {
 		const selectedTask = tasks.find((task) => task.id === taskId);
 		selectedTask.date = taskDate;
+
+		const filteredTasks = tasks.filter((task) => task.id !== taskId);
+		const updatedTasks = [...filteredTasks, selectedTask];
+		setTasks(updatedTasks);
+	};
+
+	// handle delete task
+	const deleteTask = (taskId) => {
+		setTasks(tasks.filter((task) => task.id !== taskId));
+		setIsOpen(false);
+	};
+
+	const IsCompleteHandler = (taskId) => {
+		setTaskComplete(!taskComplete);
+		const selectedTask = tasks.find((task) => task.id === taskId);
+		selectedTask.complete = taskComplete;
 
 		const filteredTasks = tasks.filter((task) => task.id !== taskId);
 		const updatedTasks = [...filteredTasks, selectedTask];
@@ -88,7 +108,7 @@ const Task = () => {
 						onClick={() => taskHandler()}
 						className="bg-indigo-900 hover:bg-indigo-800 text-white rounded-full p-1 mr-3"
 					>
-						<HiOutlinePlus size="1.5rem" className="cursor-pointer" />
+						<HiOutlinePlusSm size="1.5rem" className="cursor-pointer" />
 					</button>
 					<input
 						type="text"
@@ -102,10 +122,18 @@ const Task = () => {
 					{tasks?.map((task) => (
 						<div key={task.id} className="flex items-start my-3">
 							<button
-								onClick={() => taskHandler()}
-								className="bg-indigo-900 hover:bg-indigo-800 text-white rounded-full p-1 mr-3"
+								onClick={() => IsCompleteHandler(task.id)}
+								className="text-green-500 rounded-full mr-3"
 							>
-								<HiOutlinePlus size="1.5rem" className="cursor-pointer" />
+								{!task.complete && (
+									<div className="w-8 h-8 border border-indigo-900 hover:bg-gray-100 rounded-full"></div>
+								)}
+								{task.complete && (
+									<IoCheckmarkSharp
+										size="1.9rem"
+										className="cursor-pointer text-green-500 border border-green-500 rounded-full"
+									/>
+								)}
 							</button>
 							<div>
 								{/* task title */}
@@ -137,7 +165,10 @@ const Task = () => {
 					style={customStyles}
 				>
 					<div className="mb-4 flex justify-between">
-						<button className="text-indigo-900">
+						<button
+							onClick={() => deleteTask(singleTask.id)}
+							className="text-indigo-900"
+						>
 							<FiTrash size="1.3rem" />
 						</button>
 						<button className="text-indigo-900" onClick={closeModal}>
@@ -149,7 +180,6 @@ const Task = () => {
 						addDate={addDate}
 						saveDetails={saveDetails}
 						singleTask={singleTask}
-						tasks={tasks}
 					/>
 				</Modal>
 			</div>
