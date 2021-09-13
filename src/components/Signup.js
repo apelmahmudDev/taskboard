@@ -25,24 +25,30 @@ const Signup = () => {
 			});
 	}, []);
 
-	// handle signup
+	// handle signup auth
 	const handleSignup = (e) => {
-		// setMessage("");
 		const newUser = {
 			...user,
 			userImg: userPhoto.download_url,
 			name: nameRef.current.value,
 			email: emailRef.current.value,
-			password: passwordRef.current.value,
+			password: passwordRef.current.value.trim(),
 			isSigned: true,
 		};
-
 		// checked user signed or not
 		if (newUser.email !== user.email) {
-			setMessage("User Sign up successfully");
-			setUser(newUser);
+			if (newUser.password.length >= 6) {
+				setMessage("User Sign up successfully");
+				setUser(newUser);
+			} else {
+				setMessage("Your password should be at least 6 characters!");
+			}
 		} else {
-			setMessage("This user already signed up");
+			if (newUser.password.length >= 6) {
+				setMessage("This user already signed up");
+			} else {
+				setMessage("Your password should be at least 6 characters!");
+			}
 		}
 		e.preventDefault();
 	};
