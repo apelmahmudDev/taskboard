@@ -4,6 +4,7 @@ import Signup from "./components/Signup";
 import Taskboard from "./components/Taskboard/Taskboard";
 import TaskProvider from "./contexts/TaskContext";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 
 const App = () => {
 	return (
@@ -11,17 +12,17 @@ const App = () => {
 			<Router>
 				<Switch>
 					<Route exact path="/">
-						<Signup />
-					</Route>
-					<Route path="/signup">
-						<Signup />
+						<Login />
 					</Route>
 					<Route path="/login">
 						<Login />
 					</Route>
-					<Route path="/taskboard">
-						<Taskboard />
+					<Route path="/signup">
+						<Signup />
 					</Route>
+					<PrivateRoute path="/taskboard">
+						<Taskboard />
+					</PrivateRoute>
 				</Switch>
 			</Router>
 		</TaskProvider>

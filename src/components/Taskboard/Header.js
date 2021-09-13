@@ -5,8 +5,6 @@ import { TaskContext } from "../../contexts/TaskContext";
 
 const Header = () => {
 	const { user } = useContext(TaskContext);
-	console.log("us", user);
-
 	return (
 		<Fragment>
 			<div className="flex justify-between items-center px-4 md:px-8 bg-indigo-900 h-20">

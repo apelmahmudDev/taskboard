@@ -7,7 +7,7 @@ const ModalBody = ({ addDate, saveDetails, singleTask }) => {
 		<div className="w-96">
 			<p className="text-lg text-indigo-900">{singleTask.task}</p>
 			<textarea
-				className="my-3 block w-full p-2 h-16 outline-none text-indigo-900 text-lg"
+				className="my-5 block w-full p-2 h-16 outline-none text-indigo-900 text-lg rounded"
 				type="text"
 				ref={detailsRef}
 				defaultValue={singleTask.details}
@@ -18,18 +18,18 @@ const ModalBody = ({ addDate, saveDetails, singleTask }) => {
 					onClick={() =>
 						addDate(new Date().toLocaleDateString(), singleTask.id)
 					}
-					className="text-lg text-indigo-900 hover:text-indigo-800"
+					className="text-lg text-indigo-900 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-900 rounded px-1"
 				>
 					Add date
 				</button>
 				<button
 					onClick={() => saveDetails(detailsRef.current.value, singleTask.id)}
-					className="text-lg text-indigo-900 hover:text-indigo-800"
+					className="text-lg text-indigo-900 hover:text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-900 rounded px-1"
 				>
 					Save
 				</button>
 			</div>
-			<button className="text-lg text-indigo-900 cursor-pointer hover:text-indigo-800">
+			<button className="text-lg text-indigo-900 cursor-pointer hover:text-indigo-800 mt-3">
 				Move to another list
 			</button>
 		</div>

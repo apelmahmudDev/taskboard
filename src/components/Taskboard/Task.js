@@ -30,7 +30,7 @@ const Task = () => {
 		}
 		inputRef.current.value = "";
 	};
-	console.log("j", singleTask);
+
 	// Add task details
 	const saveDetails = (details, taskId) => {
 		const selectedTask = tasks.find((task) => task.id === taskId);
@@ -77,6 +77,8 @@ const Task = () => {
 			marginRight: "-50%",
 			transform: "translate(-50%, -50%)",
 			backgroundColor: "#f1e6e680",
+			border: "1px solid #C4C0C0",
+			boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
 		},
 	};
 
@@ -93,7 +95,7 @@ const Task = () => {
 
 	return (
 		<div>
-			<div className="m-8 p-3 border-2 border-indigo-200 max-w-sm">
+			<div className="m-8 p-3 border-2 border-indigo-200 max-w-sm shadow rounded">
 				{/* task title*/}
 				<div className="flex justify-between w-full mb-4 mt-2">
 					<h3 className="text-lg text-indigo-900 font-semibold">My Task</h3>
