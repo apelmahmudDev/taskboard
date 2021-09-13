@@ -4,7 +4,7 @@ const ModalBody = ({ addDate, saveDetails, singleTask }) => {
 	const detailsRef = useRef();
 
 	return (
-		<div className="w-96">
+		<div className="w-60 sm:w-96">
 			<p className="text-lg text-indigo-900">{singleTask.task}</p>
 			<textarea
 				className="my-5 block w-full p-2 h-20 outline-none text-indigo-900 text-lg rounded"

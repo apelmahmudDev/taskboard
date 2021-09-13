@@ -4,7 +4,7 @@ import { IoCheckmarkSharp } from "react-icons/io5";
 
 const AddedTaskShow = ({ task, openModal, IsCompleteHandler }) => {
 	return (
-		<div key={task.id} className="flex items-start my-3">
+		<div key={task.id} className="flex items-start my-3 overflow-hidden">
 			<button
 				onClick={() => IsCompleteHandler(task.id)}
 				className="text-green-500 rounded-full mr-3"
@@ -21,7 +21,7 @@ const AddedTaskShow = ({ task, openModal, IsCompleteHandler }) => {
 			</button>
 			<div>
 				{/* task title */}
-				<p className="text-lg text-indigo-900">{task.task}</p>
+				<div className="text-lg text-indigo-900 w-full">{task.task}</div>
 				{/* task details */}
 				<p className="text-sm text-gray-500">{task.details}</p>
 				{task.date && (

@@ -12,7 +12,6 @@ const Task = () => {
 	const { tasks, setTasks } = useContext(TaskContext);
 	const [modalIsOpen, setIsOpen] = useState(false);
 	const [singleTask, setSingleTask] = useState({});
-	const [taskComplete, setTaskComplete] = useState(false);
 	const inputRef = useRef();
 
 	// task handler
@@ -57,15 +56,15 @@ const Task = () => {
 
 	// set complete or not status
 	const IsCompleteHandler = (taskId) => {
-		setTaskComplete(!taskComplete);
-		const selectedTask = tasks.find((task) => task.id === taskId);
-		selectedTask.complete = taskComplete;
-
-		const filteredTasks = tasks.filter((task) => task.id !== taskId);
-		const updatedTasks = [...filteredTasks, selectedTask];
-		setTasks(updatedTasks);
+		setTasks(
+			tasks.map((task) => {
+				if (task.id === taskId) {
+					return { ...task, complete: !task.complete };
+				}
+				return task;
+			})
+		);
 	};
-
 	// MODAL AREA
 	// modal custom styles
 	const customStyles = {
@@ -95,7 +94,7 @@ const Task = () => {
 
 	return (
 		<div>
-			<div className="m-8 p-3 border-2 border-indigo-200 max-w-sm shadow rounded">
+			<div className="m-4 sm:m-8 p-3 border-2 border-indigo-200 max-w-md shadow rounded">
 				{/* task title*/}
 				<div className="flex justify-between w-full mb-4 mt-2">
 					<h3 className="text-lg text-indigo-900 font-semibold">My Task</h3>
@@ -116,7 +115,7 @@ const Task = () => {
 						type="text"
 						placeholder="Add a task"
 						ref={inputRef}
-						className="text-lg outline-none text-indigo-900 bg-white"
+						className="text-lg outline-none text-indigo-900 w-full bg-white"
 					/>
 				</div>
 				{/* Display the task added*/}

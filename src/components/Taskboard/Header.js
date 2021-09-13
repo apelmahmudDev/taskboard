@@ -8,7 +8,7 @@ const Header = () => {
 	const { user } = useContext(TaskContext);
 	return (
 		<Fragment>
-			<div className="flex justify-between items-center px-4 md:px-8 bg-indigo-900 h-20">
+			<div className="flex flex-wrap justify-between items-center px-4 md:px-8 bg-indigo-900 h-20">
 				{/* icon */}
 				<Link to="/">
 					<h1 className="flex items-center text-3xl text-white font-semibold">
