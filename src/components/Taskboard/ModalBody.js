@@ -7,7 +7,7 @@ const ModalBody = ({ addDate, saveDetails, singleTask }) => {
 		<div className="w-96">
 			<p className="text-lg text-indigo-900">{singleTask.task}</p>
 			<textarea
-				className="my-5 block w-full p-2 h-16 outline-none text-indigo-900 text-lg rounded"
+				className="my-5 block w-full p-2 h-20 outline-none text-indigo-900 text-lg rounded"
 				type="text"
 				ref={detailsRef}
 				defaultValue={singleTask.details}

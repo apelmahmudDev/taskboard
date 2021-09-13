@@ -5,6 +5,7 @@ import Taskboard from "./components/Taskboard/Taskboard";
 import TaskProvider from "./contexts/TaskContext";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
+import Notfound from "./components/Notfound";
 
 const App = () => {
 	return (
@@ -23,6 +24,9 @@ const App = () => {
 					<PrivateRoute path="/taskboard">
 						<Taskboard />
 					</PrivateRoute>
+					<Route path="*">
+						<Notfound />
+					</Route>
 				</Switch>
 			</Router>
 		</TaskProvider>
