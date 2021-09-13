@@ -1,12 +1,13 @@
 ## Taskboard 📝
 
-Taskboard is a task management SPA application like Trello but, it is a pretty small version.
+Taskboard is a task management Progressive Web Application (PWA) application like Trello but, it is a pretty small version.
 
 ![](https://i.imgur.com/YTfsyGX.png)
 ![](https://i.imgur.com/3YS4lO9.png)
 
 ### Features
 
+- A (PWA)-Progressive Web Application 😍✨💻
 - Signup and login system implemented 🔐
 - Used localStorage to store user data and tasks 🏪
 - Loaded the user profile icon randomly using api via axios 🚀
